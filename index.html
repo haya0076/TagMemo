@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>TAG Memo</title>
+
+<link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+
+<style>
+body {
+  font-family: sans-serif;
+  margin: 16px;
+}
+
+textarea,
+input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 4px 0 8px;
+  padding: 8px;
+}
+
+button {
+  padding: 8px 12px;
+  margin: 4px 4px 12px 0;
+}
+
+#table {
+  margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>TAG Memo</h1>
+
+<h2>取込</h2>
+
+<input id="baseDate" placeholder="基準日 2026/06/21">
+
+<textarea id="inputText" rows="8" placeholder="TAG.マクロ GetSheetProperty確認&#10;TAG.学習 2026/06/22 SAP基礎"></textarea>
+
+<button id="importBtn">追加取込</button>
+<button id="clearInputBtn">入力クリア</button>
+<button id="clearDataBtn">全削除</button>
+
+<div id="status"></div>
+
+<h2>一覧</h2>
+<div id="table"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>TAG Memo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>TAG Memo</h1>
+
+<section>
+  <h2>取込</h2>
+  <input id="baseDate" placeholder="基準日 2026/06/21">
+  <textarea id="inputText" rows="10" placeholder="TAG.マクロ 内容"></textarea>
+  <button id="importBtn">追加取込</button>
+  <button id="clearInputBtn">入力クリア</button>
+</section>
+
+<section>
+  <h2>フィルタ</h2>
+  <input id="filterKeyword" placeholder="キーワード">
+  <input id="filterTag" placeholder="タグ">
+  <input id="filterDate" placeholder="日付 2026/06/21">
+  <button id="filterBtn">検索</button>
+  <button id="resetFilterBtn">解除</button>
+</section>
+
+<section>
+  <h2>保存</h2>
+  <button id="exportBtn">JSON書き出し</button>
+  <input type="file" id="importJsonFile" accept="application/json">
+  <button id="clearDataBtn">全削除</button>
+</section>
+
+<section>
+  <h2>一覧</h2>
+  <div id="count"></div>
+  <div id="list"></div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html> -->
