@@ -117,25 +117,29 @@ button {
 <!-- AutoTag設定 -->
 <details>
 
-<summary>AutoTag設定</summary>
+  <summary>AutoTag設定</summary>
 
-<textarea
-  id="autoTagText"
-  rows="10"></textarea>
+  <textarea
+    id="autoTagText"
+    rows="10"></textarea>
 
-<br>
+  <br>
 
-<button id="saveAutoTagBtn">
-  AutoTag保存
-</button>
+  <button id="saveAutoTagBtn">
+    AutoTag保存
+  </button>
 
-<button id="loadAutoTagBtn">
-  AutoTag読込
-</button>
+  <button id="loadAutoTagBtn">
+    AutoTag読込
+  </button>
 
-<button id="clearAutoTagBtn">
-  AutoTagクリア
-</button>
+  <button id="retagBtn">
+    AutoTag再判定
+  </button>
+
+  <button id="clearAutoTagBtn">
+    AutoTagクリア
+  </button>
 
 </details>
 
@@ -197,6 +201,13 @@ document
 document
   .getElementById("clearAutoTagBtn")
   .addEventListener("click", clearAutoTag);
+
+document
+  .getElementById("retagBtn")
+  .addEventListener(
+    "click",
+    recalculateAutoTags
+  );
 </script>
 
 </body>

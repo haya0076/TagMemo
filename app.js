@@ -78,6 +78,12 @@ function initTable() {
         field: "content",
         editor: "input",
         headerFilter: "input"
+      },
+      {
+        title: "AutoTag",
+        field: "autoTag",
+        editor: "input",
+        headerFilter: "input"
       }
     ]
   });
@@ -109,6 +115,9 @@ function handleImportText() {
   let skipped = 0;
 
   for (const item of parsed) {
+    item.autoTag =
+      evaluateAutoTag(item);
+
     if (existsSameRecord(item)) {
       skipped++;
       continue;
@@ -171,7 +180,8 @@ function parseLine(line) {
     id: createId(),
     tag,
     date,
-    content
+    content,
+    autoTag: ""
   };
 }
 
@@ -404,7 +414,8 @@ function normalizeItem(item) {
     id: item.id || createId(),
     tag: item.tag || "",
     date: item.date || "",
-    content: item.content || ""
+    content: item.content || "",
+    autoTag: item.autoTag || ""
   };
 }
 
@@ -682,3 +693,122 @@ function clearAutoTag() {
     .value = "";
 
 }
+
+function getAutoTagRules() {
+
+    const text =
+        localStorage.getItem(
+            AUTOTAG_STORAGE_KEY
+        ) || "";
+
+    const rules = [];
+
+    const lines =
+        text.split(/\r?\n/);
+
+    for (const line of lines) {
+
+        const trimmed =
+            line.trim();
+
+        if (!trimmed) continue;
+
+        const cols =
+            trimmed.split("\t");
+
+        if (cols.length < 3)
+            continue;
+
+        try {
+
+            rules.push({
+                autoTag: cols[0],
+                target: cols[1],
+                regex: new RegExp(cols[2])
+            });
+
+        }
+        catch {
+
+        }
+
+    }
+
+    return rules;
+
+}
+
+function evaluateAutoTag(item) {
+
+    const rules =
+        getAutoTagRules();
+
+    for (const rule of rules) {
+
+        let targetText = "";
+
+        switch (
+            rule.target.toLowerCase()
+        ) {
+
+            case "tag":
+                targetText =
+                    item.tag;
+                break;
+
+            case "content":
+                targetText =
+                    item.content;
+                break;
+
+            case "both":
+                targetText =
+                    item.tag +
+                    " " +
+                    item.content;
+                break;
+
+            default:
+                continue;
+
+        }
+
+        if (
+            rule.regex.test(
+                targetText
+            )
+        ) {
+
+            return rule.autoTag;
+
+        }
+
+    }
+
+    return "";
+
+}
+
+function recalculateAutoTags() {
+
+    let count = 0;
+
+    appData.forEach(item => {
+
+        item.autoTag =
+            evaluateAutoTag(item);
+
+        count++;
+
+    });
+
+    saveData();
+
+    table.setData(appData);
+
+    updateStatus(
+        `AutoTag再判定 ${count}件`
+    );
+
+}
+
