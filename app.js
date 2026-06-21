@@ -41,7 +41,7 @@ function initTable() {
     cellEdited: function(cell) {
       const rowData = cell.getRow().getData();
 
-      rowData.updatedAt = new Date().toISOString();
+      // rowData.updatedAt = new Date().toISOString();
 
       appData = table.getData();
       saveData();
@@ -76,16 +76,6 @@ function initTable() {
         field: "content",
         editor: "input",
         headerFilter: "input"
-      },
-      {
-        title: "更新日時",
-        field: "updatedAt",
-        visible: false
-      },
-      {
-        title: "登録日時",
-        field: "createdAt",
-        visible: false
       }
     ]
   });
@@ -173,13 +163,13 @@ function parseLine(line) {
     content = rest.slice(parts[0].length).trim();
   }
 
+  const now = new Date().toISOString();
+
   return {
     id: createId(),
     tag,
     date,
-    content,
-    createdAt: new Date().toISOString(),
-    updatedAt: ""
+    content
   };
 }
 
@@ -412,9 +402,7 @@ function normalizeItem(item) {
     id: item.id || createId(),
     tag: item.tag || "",
     date: item.date || "",
-    content: item.content || "",
-    createdAt: item.createdAt || new Date().toISOString(),
-    updatedAt: item.updatedAt || ""
+    content: item.content || ""
   };
 }
 
@@ -506,3 +494,151 @@ async function copyJsonText() {
   }
 }
 
+function exportCsvText() {
+
+  const header =
+    [
+      "id",
+      "tag",
+      "date",
+      "content"
+    ];
+
+  const rows = [header];
+
+  appData.forEach(item => {
+
+    rows.push([
+      csvEscape(item.id),
+      csvEscape(item.tag),
+      csvEscape(item.date),
+      csvEscape(item.content)
+    ]);
+
+  });
+
+  const csv =
+    rows
+      .map(r => r.join(","))
+      .join("\n");
+
+  document
+    .getElementById("csvText")
+    .value = csv;
+
+  updateStatus("CSV出力");
+}
+
+function importCsvText() {
+
+  const text =
+    document
+      .getElementById("csvText")
+      .value
+      .trim();
+
+  if (!text) {
+    alert("CSVが空です");
+    return;
+  }
+
+  const lines =
+    text.split(/\r?\n/);
+
+  if (lines.length <= 1) {
+    alert("CSVデータがありません");
+    return;
+  }
+
+  let added = 0;
+  let skipped = 0;
+
+  for (let i = 1; i < lines.length; i++) {
+
+    const cols =
+      parseCsvLine(lines[i]);
+
+    if (cols.length < 6) {
+      continue;
+    }
+
+    const item = normalizeItem({
+      id: cols[0],
+      tag: cols[1],
+      date: cols[2],
+      content: cols[3]
+    });
+
+    if (existsSameRecord(item)) {
+      skipped++;
+      continue;
+    }
+
+    appData.push(item);
+    added++;
+  }
+
+  saveData();
+  table.setData(appData);
+
+  updateStatus(
+    `CSV取込 ${added}件`
+  );
+}
+
+function parseCsvLine(line) {
+
+  const result = [];
+
+  let current = "";
+  let inQuote = false;
+
+  for (let i = 0; i < line.length; i++) {
+
+    const ch = line[i];
+
+    if (ch === '"') {
+
+      if (
+        inQuote &&
+        line[i + 1] === '"'
+      ) {
+
+        current += '"';
+        i++;
+
+      } else {
+
+        inQuote = !inQuote;
+
+      }
+
+    } else if (
+      ch === "," &&
+      !inQuote
+    ) {
+
+      result.push(current);
+      current = "";
+
+    } else {
+
+      current += ch;
+
+    }
+  }
+
+  result.push(current);
+
+  return result;
+}
+
+function csvEscape(value) {
+
+  const text =
+    String(value ?? "");
+
+  return '"' +
+    text.replaceAll('"', '""') +
+    '"';
+}

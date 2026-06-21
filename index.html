@@ -38,6 +38,7 @@ button {
 
 <h1>TAG Memo</h1>
 
+<!-- 取り込み -->
 <details>
   <summary>取込</summary>
 
@@ -47,8 +48,6 @@ button {
 
   <button id="importBtn">追加取込</button>
   <button id="clearInputBtn">入力クリア</button>
-  <button id="deleteSelectedBtn">選択行削除</button>
-  <button id="clearDataBtn">全削除</button>
 
   <br>
   <button id="exportBtn">JSON出力</button>
@@ -93,10 +92,32 @@ button {
 </button>
 </details>
 
-<!-- <div id="status"></div> -->
+<!-- CSV入出力 -->
+<details>
+  <summary>CSV入出</summary>
+
+<h2>CSV文字列</h2>
+
+<textarea
+  id="csvText"
+  rows="10"></textarea>
+
+<br>
+
+<button id="exportCsvBtn">
+  CSV書出
+</button>
+
+<button id="importCsvBtn">
+  CSV読込
+</button>
+</details>
+<div id="status"></div>
 
 <h2>一覧</h2>
 <div id="table"></div>
+  <button id="deleteSelectedBtn">選択行削除</button>
+  <button id="clearDataBtn">全削除</button>
 
 <script src="app.js"></script>
 <script>
@@ -129,6 +150,14 @@ document
 document
   .getElementById("copyJsonBtn")
   .addEventListener("click", copyJsonText);
+
+document
+  .getElementById("exportCsvBtn")
+  .addEventListener("click", exportCsvText);
+
+document
+  .getElementById("importCsvBtn")
+  .addEventListener("click", importCsvText);
 </script>
 
 </body>
