@@ -112,9 +112,36 @@ button {
   CSV読込
 </button>
 </details>
-<div id="status"></div>
+
+
+<!-- AutoTag設定 -->
+<details>
+
+<summary>AutoTag設定</summary>
+
+<textarea
+  id="autoTagText"
+  rows="10"></textarea>
+
+<br>
+
+<button id="saveAutoTagBtn">
+  AutoTag保存
+</button>
+
+<button id="loadAutoTagBtn">
+  AutoTag読込
+</button>
+
+<button id="clearAutoTagBtn">
+  AutoTagクリア
+</button>
+
+</details>
+
 
 <h2>一覧</h2>
+<div id="status"></div>
 <div id="table"></div>
   <button id="deleteSelectedBtn">選択行削除</button>
   <button id="clearDataBtn">全削除</button>
@@ -158,6 +185,18 @@ document
 document
   .getElementById("importCsvBtn")
   .addEventListener("click", importCsvText);
+
+document
+  .getElementById("saveAutoTagBtn")
+  .addEventListener("click", saveAutoTag);
+
+document
+  .getElementById("loadAutoTagBtn")
+  .addEventListener("click", loadAutoTagToText);
+
+document
+  .getElementById("clearAutoTagBtn")
+  .addEventListener("click", clearAutoTag);
 </script>
 
 </body>

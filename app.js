@@ -1,5 +1,6 @@
 
 const STORAGE_KEY = "tagMemoData_v1";
+const AUTOTAG_STORAGE_KEY = "tagMemoAutoTag_v1";
 
 let appData = [];
 let table = null;
@@ -10,6 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
   initTable();
   bindEvents();
   updateStatus();
+  loadAutoTagToText();
 });
 
 function bindEvents() {
@@ -641,4 +643,42 @@ function csvEscape(value) {
   return '"' +
     text.replaceAll('"', '""') +
     '"';
+}
+
+function saveAutoTag() {
+
+  const text =
+    document
+      .getElementById("autoTagText")
+      .value;
+
+  localStorage.setItem(
+    AUTOTAG_STORAGE_KEY,
+    text
+  );
+
+  updateStatus(
+    "AutoTag保存"
+  );
+}
+
+function loadAutoTagToText() {
+
+  const text =
+    localStorage.getItem(
+      AUTOTAG_STORAGE_KEY
+    ) || "";
+
+  document
+    .getElementById("autoTagText")
+    .value = text;
+
+}
+
+function clearAutoTag() {
+
+  document
+    .getElementById("autoTagText")
+    .value = "";
+
 }
