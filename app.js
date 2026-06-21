@@ -812,3 +812,8 @@ function recalculateAutoTags() {
 
 }
 
+function clearCsvForm() {
+  document.getElementById("clearCsvTextBtn").addEventListener("click", () => {
+    document.getElementById("csvText").value = "";
+  });
+}
