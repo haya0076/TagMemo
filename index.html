@@ -38,26 +38,30 @@ button {
 
 <h1>TAG Memo</h1>
 
-<h2>取込</h2>
+<details>
+  <summary>取込</summary>
 
-<input id="baseDate" placeholder="日付を入力">
+  <input id="baseDate" placeholder="日付を入力">
 
-<textarea id="inputText" rows="8" placeholder="TAG.マクロ GetSheetProperty確認&#10;TAG.学習 2026/06/22 SAP基礎"></textarea>
+  <textarea id="inputText" rows="8" placeholder="TAG.マクロ GetSheetProperty確認&#10;TAG.学習 2026/06/22 SAP基礎"></textarea>
 
-<button id="importBtn">追加取込</button>
-<button id="clearInputBtn">入力クリア</button>
-<button id="deleteSelectedBtn">選択行削除</button>
-<button id="clearDataBtn">全削除</button>
+  <button id="importBtn">追加取込</button>
+  <button id="clearInputBtn">入力クリア</button>
+  <button id="deleteSelectedBtn">選択行削除</button>
+  <button id="clearDataBtn">全削除</button>
 
-<br>
-<button id="exportBtn">JSON出力</button>
+  <br>
+  <button id="exportBtn">JSON出力</button>
 
-<input
-  type="file"
-  id="importJsonFile"
-  accept=".json">
+  <input
+    type="file"
+    id="importJsonFile"
+    accept=".json">
+</details>  
 
-  <h2>JSON文字列取込</h2>
+<!-- SON文字列取込 -->
+<details>
+  <summary>JSON文字列取込</summary>
 
 <textarea
   id="jsonText"
@@ -67,8 +71,29 @@ button {
 <button id="importJsonTextBtn">JSON文字列取込</button>
 <button id="clearJsonTextBtn">JSON文字列クリア</button>
 
+</details>
 
-<div id="status"></div>
+<!-- JSON文字列出力 -->
+<details>
+  <summary>JSON文字列出力</summary>
+
+<textarea
+  id="jsonOutputText"
+  rows="12"
+  readonly></textarea>
+
+<br>
+
+<button id="exportJsonTextBtn">
+  JSON文字列出力
+</button>
+
+<button id="copyJsonBtn">
+  JSONコピー
+</button>
+</details>
+
+<!-- <div id="status"></div> -->
 
 <h2>一覧</h2>
 <div id="table"></div>
@@ -96,6 +121,14 @@ document
   .addEventListener("click", () => {
     document.getElementById("jsonText").value = "";
   });
+
+document
+  .getElementById("exportJsonTextBtn")
+  .addEventListener("click", exportJsonText);
+
+document
+  .getElementById("copyJsonBtn")
+  .addEventListener("click", copyJsonText);
 </script>
 
 </body>

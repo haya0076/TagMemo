@@ -457,3 +457,52 @@ function importJsonText() {
     alert("JSON文字列の解析に失敗しました。");
   }
 }
+
+function exportJsonText() {
+
+  const json =
+    JSON.stringify(appData, null, 2);
+
+  document
+    .getElementById("jsonOutputText")
+    .value = json;
+
+  updateStatus(
+    "JSON文字列出力"
+  );
+}
+
+async function copyJsonText() {
+
+  const text =
+    document
+      .getElementById("jsonOutputText")
+      .value;
+
+  if (!text) {
+    alert(
+      "出力するJSONがありません。"
+    );
+    return;
+  }
+
+  try {
+
+    await navigator.clipboard.writeText(
+      text
+    );
+
+    updateStatus(
+      "JSONコピー完了"
+    );
+
+  }
+  catch {
+
+    alert(
+      "コピーに失敗しました。"
+    );
+
+  }
+}
+
