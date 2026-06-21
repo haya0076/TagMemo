@@ -571,7 +571,7 @@ function importCsvText() {
     const cols =
       parseCsvLine(lines[i]);
 
-    if (cols.length < 6) {
+    if (cols.length < 4) {
       continue;
     }
 
