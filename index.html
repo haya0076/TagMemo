@@ -40,13 +40,33 @@ button {
 
 <h2>取込</h2>
 
-<input id="baseDate" placeholder="基準日 2026/06/21">
+<input id="baseDate" placeholder="日付を入力">
 
 <textarea id="inputText" rows="8" placeholder="TAG.マクロ GetSheetProperty確認&#10;TAG.学習 2026/06/22 SAP基礎"></textarea>
 
 <button id="importBtn">追加取込</button>
 <button id="clearInputBtn">入力クリア</button>
+<button id="deleteSelectedBtn">選択行削除</button>
 <button id="clearDataBtn">全削除</button>
+
+<br>
+<button id="exportBtn">JSON出力</button>
+
+<input
+  type="file"
+  id="importJsonFile"
+  accept=".json">
+
+  <h2>JSON文字列取込</h2>
+
+<textarea
+  id="jsonText"
+  rows="8"
+  placeholder='[{"tag":"TAG.テスト","date":"2026/06/21","content":"テスト"}]'></textarea>
+
+<button id="importJsonTextBtn">JSON文字列取込</button>
+<button id="clearJsonTextBtn">JSON文字列クリア</button>
+
 
 <div id="status"></div>
 
@@ -54,52 +74,31 @@ button {
 <div id="table"></div>
 
 <script src="app.js"></script>
+<script>
+  document
+    .getElementById("exportBtn")
+    .addEventListener("click", exportJson);
+
+  document
+    .getElementById("importJsonFile")
+    .addEventListener("change", importJson);
+
+  document
+  .getElementById("deleteSelectedBtn")
+  .addEventListener("click", deleteSelectedRows);
+
+  document
+  .getElementById("importJsonTextBtn")
+  .addEventListener("click", importJsonText);
+
+document
+  .getElementById("clearJsonTextBtn")
+  .addEventListener("click", () => {
+    document.getElementById("jsonText").value = "";
+  });
+</script>
+
 </body>
 </html>
 
 
-
-<!-- <!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>TAG Memo</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<h1>TAG Memo</h1>
-
-<section>
-  <h2>取込</h2>
-  <input id="baseDate" placeholder="基準日 2026/06/21">
-  <textarea id="inputText" rows="10" placeholder="TAG.マクロ 内容"></textarea>
-  <button id="importBtn">追加取込</button>
-  <button id="clearInputBtn">入力クリア</button>
-</section>
-
-<section>
-  <h2>フィルタ</h2>
-  <input id="filterKeyword" placeholder="キーワード">
-  <input id="filterTag" placeholder="タグ">
-  <input id="filterDate" placeholder="日付 2026/06/21">
-  <button id="filterBtn">検索</button>
-  <button id="resetFilterBtn">解除</button>
-</section>
-
-<section>
-  <h2>保存</h2>
-  <button id="exportBtn">JSON書き出し</button>
-  <input type="file" id="importJsonFile" accept="application/json">
-  <button id="clearDataBtn">全削除</button>
-</section>
-
-<section>
-  <h2>一覧</h2>
-  <div id="count"></div>
-  <div id="list"></div>
-</section>
-
-<script src="app.js"></script>
-</body>
-</html> -->
