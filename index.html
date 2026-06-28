@@ -84,27 +84,27 @@ button {
 </button>
 </details> 
 
-<!-- CSV入出力 -->
+<!-- TSV入出力 -->
 <details>
-  <summary>CSV入出</summary>
+  <summary>TSV入出</summary>
 
-<h2>CSV文字列</h2>
+<h2>TSV文字列</h2>
 
 <textarea
-  id="csvText"
+  id="tsvText"
   rows="10"></textarea>
 
 <br>
 
-<button id="exportCsvBtn">
-  CSV書出
+<button id="exportTsvBtn">
+  TSV書出
 </button>
 
-<button id="importCsvBtn">
-  CSV読込
+<button id="importTsvBtn">
+  TSV読込
 </button>
 
-<button id="clearCsvTextBtn">CSV文字列クリア</button>
+<button id="clearTsvTextBtn">TSV文字列クリア</button>
 
 </details>
 
@@ -186,12 +186,12 @@ document
   .addEventListener("click", copyJsonText);
 
 document
-  .getElementById("exportCsvBtn")
-  .addEventListener("click", exportCsvText);
+  .getElementById("exportTsvBtn")
+  .addEventListener("click", exportTsvText);
 
 document
-  .getElementById("importCsvBtn")
-  .addEventListener("click", importCsvText);
+  .getElementById("importTsvBtn")
+  .addEventListener("click", importTsvText);
 
 document
   .getElementById("saveAutoTagBtn")
@@ -213,8 +213,8 @@ document
   );
 
 document
-  .getElementById("clearCsvTextBtn")
-  .addEventListener("click", clearCsvForm);
+  .getElementById("clearTsvTextBtn")
+  .addEventListener("click", clearTsvForm);
 
 </script>
 

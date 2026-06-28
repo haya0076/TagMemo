@@ -507,7 +507,7 @@ async function copyJsonText() {
   }
 }
 
-function exportCsvText() {
+function exportTsvText() {
 
   const header =
     [
@@ -522,36 +522,36 @@ function exportCsvText() {
   appData.forEach(item => {
 
     rows.push([
-      csvEscape(item.id),
-      csvEscape(item.tag),
-      csvEscape(item.date),
-      csvEscape(item.content)
+      tsvEscape(item.id),
+      tsvEscape(item.tag),
+      tsvEscape(item.date),
+      tsvEscape(item.content)
     ]);
 
   });
 
-  const csv =
+  const tsv =
     rows
-      .map(r => r.join(","))
+      .map(r => r.join("\t"))
       .join("\n");
 
   document
-    .getElementById("csvText")
-    .value = csv;
+    .getElementById("tsvText")
+    .value = tsv;
 
-  updateStatus("CSV出力");
+  updateStatus("TSV出力");
 }
 
-function importCsvText() {
+function importTsvText() {
 
   const text =
     document
-      .getElementById("csvText")
+      .getElementById("tsvText")
       .value
       .trim();
 
   if (!text) {
-    alert("CSVが空です");
+    alert("TSVが空です");
     return;
   }
 
@@ -559,7 +559,7 @@ function importCsvText() {
     text.split(/\r?\n/);
 
   if (lines.length <= 1) {
-    alert("CSVデータがありません");
+    alert("TSVデータがありません");
     return;
   }
 
@@ -569,7 +569,7 @@ function importCsvText() {
   for (let i = 1; i < lines.length; i++) {
 
     const cols =
-      parseCsvLine(lines[i]);
+      parseTsvLine(lines[i]);
 
     if (cols.length < 4) {
       continue;
@@ -595,11 +595,11 @@ function importCsvText() {
   table.setData(appData);
 
   updateStatus(
-    `CSV取込 ${added}件`
+    `TSV取込 ${added}件`
   );
 }
 
-function parseCsvLine(line) {
+function parseTsvLine(line) {
 
   const result = [];
 
@@ -646,7 +646,7 @@ function parseCsvLine(line) {
   return result;
 }
 
-function csvEscape(value) {
+function tsvEscape(value) {
 
   const text =
     String(value ?? "");
@@ -812,8 +812,13 @@ function recalculateAutoTags() {
 
 }
 
-function clearCsvForm() {
-  document.getElementById("clearCsvTextBtn").addEventListener("click", () => {
-    document.getElementById("csvText").value = "";
+function clearTsvForm() {
+  document.getElementById("clearTsvTextBtn").addEventListener("click", () => {
+    document.getElementById("tsvText").value = "";
   });
+}
+
+function copyTsv() {
+  const rows = getExportRows(); // 既存CSV出力で使っている配列取得処理
+  copyTsvToClipboard(rows);
 }
