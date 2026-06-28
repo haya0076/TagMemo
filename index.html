@@ -159,39 +159,28 @@ button {
 
 <script src="app.js"></script>
 <script>
-  document
-    .getElementById("exportBtn")
-    .addEventListener("click", exportJson);
+  const bindIfExists = (id, eventName, handler) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener(eventName, handler);
+    }
+  };
 
-  document
-    .getElementById("importJsonFile")
-    .addEventListener("change", importJson);
+  bindIfExists("exportBtn", "click", exportJson);
+  bindIfExists("importJsonFile", "change", importJson);
+  bindIfExists("deleteSelectedBtn", "click", deleteSelectedRows);
 
-  document
-  .getElementById("deleteSelectedBtn")
-  .addEventListener("click", deleteSelectedRows);
-
-  document
-  .getElementById("importJsonTextBtn")
-  .addEventListener("click", importJsonText);
-
-document
-  .getElementById("clearJsonTextBtn")
-  .addEventListener("click", () => {
-    document.getElementById("jsonText").value = "";
+  bindIfExists("importJsonTextBtn", "click", importJsonText);
+  bindIfExists("clearJsonTextBtn", "click", () => {
+    const jsonText = document.getElementById("jsonText");
+    if (jsonText) {
+      jsonText.value = "";
+    }
   });
+  bindIfExists("exportJsonTextBtn", "click", exportJsonText);
+  bindIfExists("copyJsonBtn", "click", copyJsonText);
 
-document
-  .getElementById("exportJsonTextBtn")
-  .addEventListener("click", exportJsonText);
-
-document
-  .getElementById("copyJsonBtn")
-  .addEventListener("click", copyJsonText);
-
-document
-  .getElementById("exportTsvBtn")
-  .addEventListener("click", exportTsvText);
+  bindIfExists("exportTsvBtn", "click", exportTsvText);
 
 document
   .getElementById("importTsvBtn")

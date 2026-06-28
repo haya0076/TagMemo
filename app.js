@@ -23,7 +23,7 @@ function bindEvents() {
 
   document.getElementById("clearDataBtn").addEventListener("click", () => {
     if (!confirm("全データを削除します。よろしいですか？")) return;
-
+    exportJsonBackup();
     appData = [];
     saveData();
     table.setData(appData);
@@ -353,6 +353,37 @@ function importJson(event) {
 
   reader.readAsText(file);
 
+}
+
+function buildJsonText() {
+  return JSON.stringify(appData, null, 2);
+}
+
+function downloadJson(fileName) {
+  const json = buildJsonText();
+
+  const blob = new Blob(
+    [json],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = fileName;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function exportJson() {
+  downloadJson(`tagmemo_${todayString()}.json`);
+}
+
+function exportJsonBackup() {
+  downloadJson(`tagmemo_${todayString()}_bkp.json`);
 }
 
 function todayString() {
@@ -816,9 +847,4 @@ function clearTsvForm() {
   document.getElementById("clearTsvTextBtn").addEventListener("click", () => {
     document.getElementById("tsvText").value = "";
   });
-}
-
-function copyTsv() {
-  const rows = getExportRows(); // 既存CSV出力で使っている配列取得処理
-  copyTsvToClipboard(rows);
 }
